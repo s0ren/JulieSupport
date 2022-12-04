@@ -2,7 +2,7 @@ import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.random as random
-import matplotlib.image as mgimg
+#import matplotlib.image as mgimg
 
 
 N = 5
@@ -11,12 +11,13 @@ dust=[]
 time=[]
 t=0
 
-fig, ax = plt.subplots()
+# initialierer plt så der kun er et subplot. Bør kaldes inden clean() udføres
+fig=plt.figure()
 
 images = []
 
 def clean(i,j,t):
-    global images, ax
+    global images
     while Matrix.sum()>0:
         disti=random.randint(-1,2)
         distj=random.randint(-1,2)
@@ -27,7 +28,7 @@ def clean(i,j,t):
             Matrix[i,j]=0
             # plt.imshow(Matrix, vmin=0, vmax=1)
             # plt.show()
-            imgplot = ax.imshow(Matrix, vmin=0, vmax=1, animated=True)
+            imgplot = plt.imshow(Matrix, vmin=0, vmax=1)
             images.append([imgplot])
         t += 1
         dust.append(Matrix.sum())
@@ -36,12 +37,11 @@ def clean(i,j,t):
 
 clean(2,2,t)
 
-
-cleaning_anim = animation.ArtistAnimation(fig, images, interval=50, blit=True, repeat=False)
+cleaning_anim = animation.ArtistAnimation(fig, images, interval=50, blit=True, repeat=True, repeat_delay=500)
 
 plt.show()
 
-# from matplotlib.animation import PillowWriter
-# cleaning_anim.save('randomvacum.gif', dpi=150, writer=PillowWriter(fps=3))
+from matplotlib.animation import PillowWriter
+cleaning_anim.save('randomvacum.gif', dpi=150, writer=PillowWriter(fps=1/(50/1000)))
 
 
