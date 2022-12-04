@@ -1,9 +1,29 @@
+"""
+Denne version bruger animation.ArtistAnimation, fra matplotlib.
+ArtistAnimation kræver, som anden parameter en liste af 'Artist' obejekter.
+På linie 51-52 tilføjer jeg dem til listen:
+```
+imgplot = plt.imshow(Matrix, vmin=0, vmax=1)
+            images.append([imgplot])
+```
+man kan sige at det som `imshow()` returnerer er kompatibelt til et Artist objekt.
+
+På line 60 kalder jeg 
+```
+cleaning_anim = animation.ArtistAnimation(fig, images, interval=50, blit=True, repeat=True, repeat_delay=500)
+```
+frem for at bruge `FuncAnimation()`, som kræver at man omskriver clean()-funktionen ret meget.
+
+Til sidst (linie 65) eksporterer jeg til an animeret gif. 
+Det gøres ganske vist på samme måde hvis det havde været en med  FuncAnimation()`.
+"""
+
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.random as random
 #import matplotlib.image as mgimg
-
+from matplotlib.animation import PillowWriter
 
 N = 5
 Matrix = np.ones((N,N))
@@ -41,7 +61,7 @@ cleaning_anim = animation.ArtistAnimation(fig, images, interval=50, blit=True, r
 
 plt.show()
 
-from matplotlib.animation import PillowWriter
+#from matplotlib.animation import PillowWriter
 cleaning_anim.save('randomvacum.gif', dpi=150, writer=PillowWriter(fps=1/(50/1000)))
 
 
