@@ -11,10 +11,12 @@ dust=[]
 time=[]
 t=0
 
+fig, ax = plt.subplots()
+
 images = []
 
 def clean(i,j,t):
-    global images
+    global images, ax
     while Matrix.sum()>0:
         disti=random.randint(-1,2)
         distj=random.randint(-1,2)
@@ -25,7 +27,7 @@ def clean(i,j,t):
             Matrix[i,j]=0
             # plt.imshow(Matrix, vmin=0, vmax=1)
             # plt.show()
-            imgplot = plt.imshow(Matrix, vmin=0, vmax=1)
+            imgplot = ax.imshow(Matrix, vmin=0, vmax=1, animated=True)
             images.append([imgplot])
         t += 1
         dust.append(Matrix.sum())
@@ -34,7 +36,7 @@ def clean(i,j,t):
 
 clean(2,2,t)
 
-fig = plt.figure()
+
 cleaning_anim = animation.ArtistAnimation(fig, images, interval=50, blit=True, repeat=False)
 
 plt.show()
